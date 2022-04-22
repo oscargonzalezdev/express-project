@@ -29,13 +29,17 @@ const products = [
     }
 ];
 
-Product.insertMany(products)
-.then(response => {
-    console.log("products inserted in db successfuly", response);
-})
-.catch(error => {
-    console.log("error inserting products in db", error);
-})
-.finally( () => {
-    mongoose.connection.close();
-});
+// Product.insertMany(products)
+// .then(response => {
+//     console.log("products inserted in db successfuly", response);
+// })
+// .catch(error => {
+//     console.log("error inserting products in db", error);
+// })
+// .finally( () => {
+//     mongoose.connection.close();
+// });
+
+// Product.findByIdAndUpdate("6262612d854a6a3ba6b804c4",{category: "city"}, {returnDocument: 'after'})
+// .then(productsArr => console.log("products updated successfully: ", productsArr))
+// .catch(error => console.log("error updating products from DB", error));

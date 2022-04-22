@@ -22,7 +22,7 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 
 
-// create routes
+// create routes for pages
 app.get('/', (req, res, next) => {
     res.render('index');
 });
@@ -35,77 +35,39 @@ app.get('/contact', (req, res, next) => {
     res.render('contact');
 });
 
+app.get('/products', (req, res, next) => {
 
-// create routes for products
-app.get("/bike1", (req, res, next) => {
-    Product.findOne({ title: "Bike1" })
+    let filter;
+    const max = req.query.maxPrice;
+    
+    if(max === undefined){
+        filter = {};
+    } else {
+        filter = {price: {$lte: max} };
+    }
+    Product.find(filter)
+    .then(productsArr => {
+        res.render('productList', {products: productsArr});
+    })
+    .catch(
+        error => {
+            console.log("error: ", error);
+        });
+});
+
+// create route parameters for products
+app.get("/products/:productId", (req, res, next) => {
+    Product.findById(req.params.productId)
         .then(
             productDetails => {
                 res.render("product", productDetails);
-            }
-        )
+            })
         .catch(
             error => {
                 console.log("error: ", error);
-            }
-        )
+            })
 });
 
-app.get("/bike2", (req, res, next) => {
-    Product.findOne({ title: "Bike2" })
-        .then(
-            productDetails => {
-                res.render("product", productDetails);
-            }
-        )
-        .catch(
-            error => {
-                console.log("error: ", error);
-            }
-        )
-});
-
-app.get("/bike3", (req, res, next) => {
-    Product.findOne({ title: "Bike3" })
-        .then(
-            productDetails => {
-                res.render("product", productDetails);
-            }
-        )
-        .catch(
-            error => {
-                console.log("error: ", error);
-            }
-        )
-});
-
-app.get("/bike3", (req, res, next) => {
-    Product.findOne({ title: "Bike3" })
-        .then(
-            productDetails => {
-                res.render("product", productDetails);
-            }
-        )
-        .catch(
-            error => {
-                console.log("error: ", error);
-            }
-        )
-});
-
-app.get("/bike4", (req, res, next) => {
-    Product.findOne({ title: "Bike4" })
-        .then(
-            productDetails => {
-                res.render("product", productDetails);
-            }
-        )
-        .catch(
-            error => {
-                console.log("error: ", error);
-            }
-        )
-});
 
 app.listen(3000, () => {
     console.log('server running on port: 3000');

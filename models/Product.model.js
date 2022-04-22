@@ -23,6 +23,10 @@ const productSchema = new Schema({
     store: {
         type: [String],
         enum: ["online", "paris", "madrid", "london"]
+    },
+    category: {
+        type: String,
+        enum: ["mtb", "city", "race", "travel"]
     }
 });
 
